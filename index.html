@@ -1,0 +1,202 @@
+       <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaraBooth Deluxe - Apongsky</title>
+    <style>
+        :root { --accent: #ff7675; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; text-align: center; margin: 0; padding: 10px; color: #2d3436; }
+        .booth-container { max-width: 450px; margin: auto; background: white; padding: 20px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .screen { position: relative; background: #000; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; }
+        video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        .timer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 100px; color: white; font-weight: 900; z-index: 100; }
+        
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        label { font-size: 11px; font-weight: bold; color: #999; display: block; margin-bottom: 5px; text-align: left; }
+        select, input { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #eee; background: #fafafa; font-weight: bold; }
+        
+        /* Sticker Box */
+        .sticker-box { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin: 10px 0; border-top: 1px solid #eee; }
+        .sticker-item { font-size: 30px; cursor: pointer; background: #f9f9f9; padding: 5px; border-radius: 10px; min-width: 45px; }
+
+        #startBtn { width: 100%; background: var(--accent); color: white; border: none; padding: 18px; border-radius: 15px; font-size: 18px; font-weight: bold; box-shadow: 0 10px 20px rgba(255, 118, 117, 0.3); }
+        
+        #canvas-container { position: relative; display: inline-block; margin-top: 20px; touch-action: none; }
+        canvas { max-width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        
+        .donate-link { display: block; margin-top: 20px; color: #fab1a0; font-weight: bold; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<div class="booth-container">
+    <h2 style="margin:0; color:var(--accent)">NARASTORE0719</h2>
+    <p style="font-size:12px; margin:5px 0 15px; opacity:0.6">Premium Photo Experience x Apongsky</p>
+
+    <div class="screen">
+        <div id="timer" class="timer"></div>
+        <video id="webcam" autoplay playsinline></video>
+    </div>
+
+    <div class="controls">
+        <div>
+            <label>FILTER STUDIO</label>
+            <select id="filterSelect">
+                <option value="none">Natural Soft</option>
+                <option value="brightness(1.1) saturate(1.2)">Seoul (Bright)</option>
+                <option value="grayscale(100%) contrast(1.2)">Noir (B&W)</option>
+                <option value="sepia(0.2) brightness(1.1) contrast(1.1)">Vintage Warm</option>
+                <option value="saturate(0.8) contrast(1.1)">Muted Aesthetic</option>
+            </select>
+        </div>
+        <div>
+            <label>FRAME COLOR</label>
+            <input type="color" id="frameColor" value="#ffffff">
+        </div>
+    </div>
+
+    <label>TAMBAH STIKER LUCU (Klik untuk tambah)</label>
+    <div class="sticker-box">
+        <span class="sticker-item" onclick="addSticker('❤️')">❤️</span>
+        <span class="sticker-item" onclick="addSticker('✨')">✨</span>
+        <span class="sticker-item" onclick="addSticker('🎀')">🎀</span>
+        <span class="sticker-item" onclick="addSticker('🐱')">🐱</span>
+        <span class="sticker-item" onclick="addSticker('😎')">😎</span>
+        <span class="sticker-item" onclick="addSticker('🔥')">🔥</span>
+        <span class="sticker-item" onclick="addSticker('🌸')">🌸</span>
+        <span class="sticker-item" onclick="addSticker('⭐')">⭐</span>
+    </div>
+
+    <button id="startBtn" onclick="startSession()">MULAI PHOTO SESSION</button>
+
+    <div id="canvas-container" class="d-none">
+        <p style="font-size:11px; color:#666">Geser stiker untuk mengatur posisi!</p>
+        <canvas id="finalCanvas"></canvas>
+        <button id="downloadBtn" onclick="downloadImage()" style="background:#00b894; margin-top:10px; width:100%; border:none; color:white; padding:15px; border-radius:15px; font-weight:bold;">SIMPAN KE GALERI</button>
+    </div>
+
+    <a href="https://saweria.co/narastore0719" target="_blank" class="donate-link">Support Developer via Saweria ☕</a>
+</div>
+
+<script>
+const video = document.getElementById('webcam');
+const timerEl = document.getElementById('timer');
+const filterSelect = document.getElementById('filterSelect');
+const frameColorInput = document.getElementById('frameColor');
+const canvas = document.getElementById('finalCanvas');
+const ctx = canvas.getContext('2d');
+
+let capturedImages = [];
+let stickers = [];
+const beep = new Audio("https://www.soundjay.com/button/beep-07.mp3");
+const shutter = new Audio("https://www.soundjay.com/free-music/shutter-click-01.mp3");
+
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }).then(s => video.srcObject = s);
+
+async function startSession() {
+    capturedImages = [];
+    stickers = [];
+    document.getElementById('canvas-container').classList.add('d-none');
+    
+    for(let i=0; i<4; i++) {
+        for(let c=3; c>=0; c--) {
+            timerEl.innerText = c > 0 ? c : "";
+            if(c > 0) beep.play();
+            await new Promise(r => setTimeout(r, 1000));
+        }
+        shutter.play();
+        takeSnap();
+    }
+    renderStrip();
+    document.getElementById('canvas-container').classList.remove('d-none');
+}
+
+function takeSnap() {
+    const tempC = document.createElement('canvas');
+    tempC.width = 800; tempC.height = 600;
+    const tCtx = tempC.getContext('2d');
+    tCtx.filter = filterSelect.value;
+    tCtx.translate(800,0); tCtx.scale(-1,1);
+    tCtx.drawImage(video, 0, 0, 800, 600);
+    capturedImages.push(tempC.toDataURL());
+}
+
+function renderStrip() {
+    canvas.width = 600; canvas.height = 1900;
+    ctx.fillStyle = frameColorInput.value;
+    ctx.fillRect(0,0,600,1900);
+    
+    const textCol = isDark(frameColorInput.value) ? "#fff" : "#333";
+    ctx.fillStyle = textCol;
+    ctx.textAlign = "center";
+    ctx.font = "bold 40px sans-serif"; ctx.fillText("NARASTORE0719", 300, 80);
+    ctx.font = "16px sans-serif"; ctx.fillText("Special Photostrip with Apongsky", 300, 110);
+
+    capturedImages.forEach((src, i) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+            ctx.drawImage(img, 50, 150 + (i * 420), 500, 375);
+            if(i === 3) drawStickers();
+        };
+    });
+}
+
+function addSticker(emoji) {
+    stickers.push({ emoji, x: 300, y: 500, size: 50 });
+    drawStickers();
+}
+
+function drawStickers() {
+    renderStrip(); // Redraw base
+    ctx.font = "50px serif";
+    stickers.forEach(s => {
+        ctx.fillText(s.emoji, s.x, s.y);
+    });
+}
+
+// Fitur Geser Stiker (Sederhana untuk Mobile)
+canvas.addEventListener('touchstart', e => {
+    const rect = canvas.getBoundingClientRect();
+    const touchX = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+    const touchY = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
+    
+    stickers.forEach(s => {
+        if(Math.abs(s.x - touchX) < 50 && Math.abs(s.y - touchY) < 50) {
+            s.active = true;
+        }
+    });
+});
+
+canvas.addEventListener('touchmove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const touchX = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+    const touchY = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
+    
+    stickers.forEach(s => {
+        if(s.active) {
+            s.x = touchX; s.y = touchY;
+            drawStickers();
+        }
+    });
+});
+
+canvas.addEventListener('touchend', () => stickers.forEach(s => s.active = false));
+
+function downloadImage() {
+    const link = document.createElement('a');
+    link.download = 'NaraBooth.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+function isDark(color) {
+    const r = parseInt(color.substr(1,2),16);
+    const g = parseInt(color.substr(3,2),16);
+    const b = parseInt(color.substr(5,2),16);
+    return (r*0.299 + g*0.587 + b*0.114) < 128;
+}
+</script>
+</body>
+</html>
