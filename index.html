@@ -3,40 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NaraBooth Ultimate V11</title>
+    <title>NaraBooth Party V14</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #ff7675; --bg: #121212; --card: #1e1e1e; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: white; margin: 0; padding: 10px; text-align: center; overflow-x: hidden; }
+        :root { --accent: #ff7675; --bg: #0f1115; --glass: rgba(255, 255, 255, 0.07); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: white; margin: 0; padding: 15px; display: flex; justify-content: center; min-height: 100vh; }
         
-        .container { max-width: 450px; margin: auto; background: var(--card); padding: 20px; border-radius: 35px; box-shadow: 0 25px 50px rgba(0,0,0,0.6); border: 1px solid #333; }
+        .container { width: 100%; max-width: 420px; background: rgba(30, 32, 38, 0.85); backdrop-filter: blur(25px); padding: 25px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); }
         
-        .screen { position: relative; background: #000; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; border: 3px solid #222; }
+        .header { text-align: left; margin-bottom: 20px; }
+        .header h1 { margin: 0; font-size: 26px; font-weight: 800; background: linear-gradient(45deg, #ff7675, #fab1a0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .screen { position: relative; background: #000; border-radius: 28px; overflow: hidden; aspect-ratio: 4/3; border: 2px solid #333; box-shadow: 0 0 20px rgba(255,118,117,0.1); }
         video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
-        .timer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 100px; font-weight: 900; z-index: 100; color: white; text-shadow: 0 0 20px var(--accent); }
+        .timer { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 100px; font-weight: 800; z-index: 100; color: white; text-shadow: 0 5px 30px rgba(0,0,0,0.8); }
         
-        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        select, input[type="color"] { background: #2d2d2d; border: 1px solid #444; color: white; padding: 12px; border-radius: 12px; font-weight: bold; outline: none; }
+        .flash-active { background: white !important; transition: 0.1s; filter: brightness(1.5); }
 
-        .sticker-box { display: flex; gap: 15px; overflow-x: auto; padding: 10px; background: #111; border-radius: 15px; margin-bottom: 15px; border: 1px solid #333; }
-        .sticker-item { font-size: 32px; cursor: pointer; min-width: 50px; transition: 0.2s; }
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+        .control-item { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 14px; border-radius: 18px; font-weight: 700; outline: none; transition: 0.3s; }
+
+        .sticker-box { display: flex; gap: 12px; overflow-x: auto; padding: 12px; background: var(--glass); border-radius: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .sticker-item { font-size: 30px; cursor: pointer; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
         .sticker-item:active { transform: scale(1.4); }
 
-        #startBtn { width: 100%; background: linear-gradient(45deg, #ff7675, #ef5777); color: white; border: none; padding: 20px; border-radius: 18px; font-size: 18px; font-weight: 900; cursor: pointer; box-shadow: 0 10px 20px rgba(255, 118, 117, 0.3); }
-        #startBtn:disabled { background: #444; opacity: 0.6; }
+        #startBtn { width: 100%; background: linear-gradient(135deg, #ff7675 0%, #d63031 100%); color: white; border: none; padding: 20px; border-radius: 22px; font-size: 17px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(214, 48, 49, 0.4); transition: 0.3s; }
+        #startBtn:active { transform: scale(0.95); }
+        #startBtn:disabled { background: #444; opacity: 0.7; }
 
-        canvas { max-width: 100%; border-radius: 15px; margin-top: 20px; display: none; touch-action: none; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .btn-save { background: #00b894; color: white; border: none; padding: 18px; border-radius: 15px; width: 100%; margin-top: 15px; display: none; font-weight: bold; cursor: pointer; font-size: 16px; }
+        canvas { max-width: 100%; border-radius: 20px; margin-top: 25px; display: none; touch-action: none; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+        .btn-save { background: #00b894; color: white; border: none; padding: 18px; border-radius: 20px; width: 100%; margin-top: 15px; display: none; font-weight: 800; box-shadow: 0 10px 20px rgba(0,184,148,0.2); }
         
-        .flash-active { background: #fff !important; transition: 0.05s; }
-        .saweria-btn { background: #feca57; color: #2d3436; text-decoration: none; font-weight: 900; padding: 12px 25px; border-radius: 12px; display: inline-block; margin-top: 15px; font-size: 14px; box-shadow: 0 5px 15px rgba(254, 202, 87, 0.3); }
+        .saweria-btn { background: #feca57; color: #2d3436; text-decoration: none; font-weight: 800; padding: 14px 28px; border-radius: 18px; display: inline-block; margin-top: 25px; box-shadow: 0 8px 20px rgba(254, 202, 87, 0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 8px 20px rgba(254, 202, 87, 0.3); } 50% { transform: scale(1.05); box-shadow: 0 12px 30px rgba(254, 202, 87, 0.5); } 100% { transform: scale(1); box-shadow: 0 8px 20px rgba(254, 202, 87, 0.3); } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div style="text-align: left; margin-bottom: 15px;">
-        <h2 style="margin:0; color:var(--accent); letter-spacing: 2px;">NARABOOTH <span style="font-weight:100; font-size:14px; color:#fff">V11</span></h2>
-        <p style="font-size:10px; opacity:0.5; margin:0;">PREMIUM PHOTO EXPERIENCE BY APONGSKY</p>
+    <div class="header">
+        <h1>NARABOOTH</h1>
+        <p style="font-size: 10px; opacity: 0.5; letter-spacing: 2px;">V14 PARTY • BY APONGSKY</p>
     </div>
 
     <div class="screen">
@@ -45,35 +52,37 @@
     </div>
 
     <div class="controls">
-        <select id="filterSelect">
-            <option value="none">Default Studio</option>
-            <option value="brightness(1.1) saturate(1.2) contrast(1.1)">Seoul Soft</option>
-            <option value="grayscale(100%) contrast(1.3)">Noir Aesthetic</option>
-            <option value="sepia(0.3) brightness(1.1)">Vintage 90s</option>
+        <select id="filterSelect" class="control-item">
+            <option value="none">Pure Studio</option>
+            <option value="brightness(1.1) saturate(1.2)">Korean Glow</option>
+            <option value="grayscale(100%) contrast(1.2)">Deep Noir</option>
+            <option value="sepia(0.2) brightness(1.1)">Retro Film</option>
         </select>
-        <input type="color" id="frameColor" value="#ffffff">
+        <input type="color" id="frameColor" class="control-item" value="#ffffff" style="padding: 5px;">
     </div>
 
     <div class="sticker-box">
         <span class="sticker-item" onclick="addSticker('❤️')">❤️</span>
         <span class="sticker-item" onclick="addSticker('✨')">✨</span>
-        <span class="sticker-item" onclick="addSticker('🐱')">🐱</span>
         <span class="sticker-item" onclick="addSticker('🎀')">🎀</span>
-        <span class="sticker-item" onclick="addSticker('👑')">👑</span>
+        <span class="sticker-item" onclick="addSticker('🐱')">🐱</span>
         <span class="sticker-item" onclick="addSticker('🔥')">🔥</span>
-        <span class="sticker-item" onclick="addSticker('📸')">📸</span>
     </div>
 
-    <button id="startBtn" onclick="startSession()">📸 TAKE PHOTOSTRIP</button>
+    <button id="startBtn" onclick="startSession()">📸 CAPTURE THE PARTY</button>
 
     <canvas id="finalCanvas"></canvas>
-    <button id="downloadBtn" class="btn-save" onclick="downloadImage()">💾 SAVE TO GALLERY</button>
+    <button id="downloadBtn" class="btn-save" onclick="downloadImage()">💾 DOWNLOAD TO GALLERY</button>
 
-    <div style="margin-top:20px; border-top: 1px solid #333; padding-top: 20px;">
-        <p style="font-size:11px; opacity:0.5; margin-bottom:15px;">Tips: Klik stiker lalu geser di atas frame hasil foto!</p>
-        <a href="https://saweria.co/narastore0719" target="_blank" class="saweria-btn">☕ TRAKTIR KOPI (SAWERIA)</a>
+    <div style="text-align: center;">
+        <a href="https://saweria.co/narastore0719" target="_blank" class="saweria-btn">☕ DUKUNG NARASTORE (SAWERIA)</a>
     </div>
 </div>
+
+<audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<audio id="beepSound" src="https://www.soundjay.com/button/beep-07.mp3"></audio>
+<audio id="shutterSound" src="https://www.soundjay.com/free-music/shutter-click-01.mp3"></audio>
+<audio id="cheerSound" src="https://www.soundjay.com/human/applause-01.mp3"></audio>
 
 <script>
 const video = document.getElementById('webcam');
@@ -83,9 +92,12 @@ const ctx = canvas.getContext('2d');
 const startBtn = document.getElementById('startBtn');
 const downloadBtn = document.getElementById('downloadBtn');
 
-let capturedImages = [], stickers = [], isDragging = false, activeSticker = null;
-const beep = new Audio("https://www.soundjay.com/button/beep-07.mp3");
-const shutter = new Audio("https://www.soundjay.com/free-music/shutter-click-01.mp3");
+const bgMusic = document.getElementById('bgMusic');
+const beep = document.getElementById('beepSound');
+const shutter = document.getElementById('shutterSound');
+const cheer = document.getElementById('cheerSound');
+
+let capturedImages = [], stickers = [];
 
 navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }).then(s => video.srcObject = s);
 
@@ -93,6 +105,10 @@ async function startSession() {
     capturedImages = []; stickers = [];
     canvas.style.display = 'none'; downloadBtn.style.display = 'none';
     startBtn.disabled = true;
+    
+    // Play Background Music (Volume pelan biar enak)
+    bgMusic.volume = 0.25;
+    bgMusic.play().catch(e => console.log("Music blocked until user interacts"));
 
     for(let i=0; i<4; i++) {
         for(let c=3; c>=0; c--) {
@@ -105,9 +121,14 @@ async function startSession() {
         takeSnap();
         setTimeout(() => document.body.classList.remove('flash-active'), 100);
     }
-    renderAll();
+    
+    renderStrip();
     canvas.style.display = 'block'; downloadBtn.style.display = 'block';
     startBtn.disabled = false;
+    
+    // Stop Music & Cheer!
+    bgMusic.pause(); bgMusic.currentTime = 0;
+    cheer.play();
 }
 
 function takeSnap() {
@@ -117,72 +138,55 @@ function takeSnap() {
     tCtx.filter = document.getElementById('filterSelect').value;
     tCtx.translate(1200,0); tCtx.scale(-1,1);
     tCtx.drawImage(video, 0, 0, 1200, 900);
-    capturedImages.push(temp.toDataURL());
+    capturedImages.push(temp.toDataURL('image/png'));
 }
 
-function renderAll() {
+function renderStrip() {
     canvas.width = 600; canvas.height = 1950;
     const bg = document.getElementById('frameColor').value;
     ctx.fillStyle = bg; ctx.fillRect(0,0,600,1950);
     
     const txtCol = isDark(bg) ? "#fff" : "#2d3436";
     ctx.fillStyle = txtCol; ctx.textAlign = "center";
-    ctx.font = "bold 42px sans-serif"; ctx.fillText("NARABOOTH", 300, 90);
-    ctx.font = "12px sans-serif"; ctx.fillText("MEMORIES BY NARASTORE0719 x APONGSKY", 300, 120);
+    ctx.font = "bold 42px 'Plus Jakarta Sans'"; ctx.fillText("NARABOOTH", 300, 90);
 
     capturedImages.forEach((src, i) => {
         const img = new Image();
         img.src = src;
         img.onload = () => {
-            const y = 160 + (i * 435);
-            ctx.fillStyle = "white"; 
-            ctx.fillRect(45, y-5, 510, 385);
+            const y = 175 + (i * 430);
+            ctx.fillStyle = "white"; ctx.fillRect(45, y-5, 510, 385);
             ctx.drawImage(img, 50, y, 500, 375);
-            if(i === 3) drawUI();
+            if(i === 3) drawStickers();
         };
     });
 }
 
 function addSticker(emoji) {
     stickers.push({ emoji, x: 300, y: 1000 });
-    drawUI();
+    drawStickers();
 }
 
-function drawUI() {
-    renderAll();
+function drawStickers() {
+    renderStrip();
     ctx.font = "75px serif";
     stickers.forEach(s => ctx.fillText(s.emoji, s.x, s.y));
 }
 
-// Touch Handling for Dragging Stickers
-canvas.addEventListener('touchstart', e => {
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
-    const y = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
-    
-    stickers.forEach((s, index) => {
-        if (Math.hypot(s.x - x, s.y - y) < 60) {
-            activeSticker = s;
-            isDragging = true;
-        }
-    });
-});
-
 canvas.addEventListener('touchmove', e => {
-    if (!isDragging || !activeSticker) return;
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
-    activeSticker.x = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
-    activeSticker.y = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
-    drawUI();
+    if(stickers.length > 0) {
+        stickers[stickers.length-1].x = (e.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+        stickers[stickers.length-1].y = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
+        drawStickers();
+    }
 }, {passive: false});
-
-canvas.addEventListener('touchend', () => { isDragging = false; activeSticker = null; });
 
 function downloadImage() {
     const link = document.createElement('a');
-    link.download = `NaraBooth_V11_${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
+    link.download = `NaraBooth_V14_${Date.now()}.png`;
+    link.href = canvas.toDataURL();
     link.click();
 }
 
