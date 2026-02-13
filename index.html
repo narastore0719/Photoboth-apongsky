@@ -9,7 +9,6 @@
             --viola-purple: #9b5de5;
             --rose-pink: #f15bb5;
             --soft-bg: #fff0f3;
-            --dark-text: #4a4e69;
         }
 
         body {
@@ -18,10 +17,8 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            color: var(--dark-text);
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -45,36 +42,22 @@
             z-index: 10;
         }
 
-        .nadin-name { 
-            color: var(--rose-pink); 
-            font-size: 2.2rem; 
-            font-weight: bold; 
-            display: block; 
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        /* Secret Letter */
-        #secret-content {
-            display: none;
-            margin-top: 20px;
-            animation: fadeIn 1.5s ease;
-        }
+        .nadin-name { color: var(--rose-pink); font-size: 2.2rem; font-weight: bold; display: block; margin-bottom: 10px; }
 
         .love-letter {
+            display: none;
+            margin-top: 20px;
             font-style: italic;
             line-height: 1.6;
             background: rgba(255, 255, 255, 0.5);
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--viola-purple);
+            animation: fadeIn 1.5s ease;
         }
 
-        /* Gallery */
         .gallery-container {
             display: none;
-            padding: 80px 20px;
+            padding: 50px 20px;
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -90,36 +73,31 @@
             padding: 12px;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transform: rotate(-1.5deg);
             transition: 0.4s;
         }
-
-        .photo-card:nth-child(even) { transform: rotate(1.5deg); }
-        .photo-card:hover { transform: rotate(0) scale(1.05); }
 
         .photo-card img {
             width: 100%;
             height: auto;
             border-radius: 10px;
+            display: block;
         }
 
         .caption {
-            margin-top: 12px;
+            margin-top: 10px;
             font-size: 0.9rem;
-            color: #666;
+            color: #555;
+            text-align: center;
         }
 
-        /* Elements */
         .gift-box { font-size: 80px; cursor: pointer; animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 100% {transform:translateY(0)} 50% {transform:translateY(-15px)} }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
 
         button {
             background: var(--viola-purple); color: white; border: none; padding: 15px 30px;
-            border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;
-            box-shadow: 0 5px 15px rgba(155, 93, 229, 0.3); transition: 0.3s;
+            border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px;
         }
-        button:hover { background: var(--rose-pink); transform: translateY(-3px); }
 
         .heart-particle { position: fixed; pointer-events: none; z-index: 99; animation: fly linear forwards; }
         @keyframes fly { to { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
@@ -133,50 +111,45 @@
 
     <section class="hero">
         <div class="card">
-            <h1>Untuk Sayangku,</h1>
+            <h1>Happy Valentine,</h1>
             <span class="nadin-name">Nadin Uta Viola 💜</span>
-            
             <div id="gift" class="gift-box" onclick="reveal()">🎁</div>
-            <p id="hint">Klik hadiahnya ya...</p>
+            <p id="hint">Klik hadiahnya ya, Sayang...</p>
             
-            <div id="secret-content">
-                <div class="love-letter">
-                    "Sama seperti namamu, Nadin Uta Viola... kamu adalah melodi paling indah yang pernah aku dengar dan bunga yang paling cantik yang pernah aku temukan. <br><br>
-                    Terima kasih sudah memilihku untuk berjalan di sampingmu. Di hari Valentine ini, aku cuma mau bilang kalau aku beruntung banget punya kamu. Tetap jadi Nadin yang ceria ya? I love you more than words can say."
-                </div>
-                <button onclick="document.getElementById('gallery').scrollIntoView()">Buka Kenangan Kita ✨</button>
+            <div id="loveLetter" class="love-letter">
+                "Sama seperti namamu, Nadin Uta Viola... kamu adalah melodi paling indah dan bunga yang paling cantik di hidupku. Happy Valentine's Day! 💜"
+                <br>
+                <button onclick="document.getElementById('gallery').scrollIntoView()">Lihat Foto Kita ✨</button>
             </div>
         </div>
     </section>
 
     <section id="gallery" class="gallery-container">
-        <h2 style="text-align: center; color: var(--rose-pink); font-size: 2rem; margin-bottom: 40px;">Our Sweet Moments 🌸</h2>
+        <h2 style="text-align: center; color: var(--rose-pink); margin-bottom: 30px;">Our Memories 🌸</h2>
         <div class="gallery-grid">
             
             <div class="photo-card">
                 <img src="https://i.ibb.co.com/hR04HzSs/image.jpg" alt="Foto 1">
-                <p class="caption">"Setiap liat foto ini, aku selalu senyum-senyum sendiri..."</p>
+                <p class="caption">Momen indah bareng Nadin 💜</p>
             </div>
 
             <div class="photo-card">
                 <img src="https://i.ibb.co.com/q3jsGsWX/image.jpg" alt="Foto 2">
-                <p class="caption">"Kamu beneran definisi cantik yang nyata bagi aku."</p>
+                <p class="caption">Senyum kamu favorit aku 😍</p>
             </div>
 
             <div class="photo-card">
                 <img src="https://i.ibb.co.com/wNLktn2K/image.jpg" alt="Foto 3">
-                <p class="caption">"Makasih ya buat semua tawanya, Din."</p>
+                <p class="caption">Bahagia terus ya kita ✨</p>
             </div>
 
             <div class="photo-card">
                 <img src="https://i.ibb.co.com/fdqgcDYV/image.jpg" alt="Foto 4">
-                <p class="caption">"Valentine tahun ini spesial banget karena ada kamu."</p>
+                <p class="caption">I love you so much! ❤️</p>
             </div>
 
         </div>
-        <p style="text-align: center; margin-top: 100px; color: var(--viola-purple); font-weight: bold;">
-            Happy Valentine's Day, Nadin Uta Viola! ❤️
-        </p>
+        <p style="text-align: center; margin-top: 50px; color: #888;">Forever with Nadin Uta Viola</p>
     </section>
 
     <script>
@@ -184,13 +157,12 @@
             document.getElementById('gift').innerHTML = '💐';
             document.getElementById('gift').style.animation = 'none';
             document.getElementById('hint').style.display = 'none';
-            document.getElementById('secret-content').style.display = 'block';
+            document.getElementById('loveLetter').style.display = 'block';
             document.getElementById('gallery').style.display = 'block';
             
-            const song = document.getElementById('mySong');
-            song.play();
+            document.getElementById('mySong').play();
             
-            for(let i=0; i<60; i++) {
+            for(let i=0; i<50; i++) {
                 setTimeout(createHeart, i * 100);
             }
         }
@@ -198,11 +170,10 @@
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart-particle');
-            const icons = ['💜', '❤️', '🌸', '✨', '💐'];
-            heart.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+            heart.innerHTML = ['💜', '❤️', '🌸', '✨'][Math.floor(Math.random()*4)];
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.top = '100vh';
-            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            heart.style.fontSize = '25px';
             heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 4000);
