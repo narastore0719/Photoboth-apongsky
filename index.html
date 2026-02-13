@@ -3,62 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apongsky Store | Official</title>
-    <meta name="author" content="Apongsky">
-    <meta name="description" content="Toko Resmi Apongsky Store - Produk Original & Terpercaya">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Special for Nadin Uta Viola</title>
     <style>
-        .product-card { transition: 0.3s; border: 1px solid #eee; }
-        .product-card:hover { transform: translateY(-8px); shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        :root {
+            --viola-purple: #9b5de5;
+            --rose-pink: #f15bb5;
+            --soft-bg: #fff0f3;
+            --dark-text: #4a4e69;
+        }
+
+        body {
+            margin: 0;
+            background: var(--soft-bg);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            color: var(--dark-text);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            background: linear-gradient(135deg, #fee1e8 0%, #eaf4ff 100%);
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid white;
+            width: 100%;
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        .nadin-name { 
+            color: var(--rose-pink); 
+            font-size: 2.2rem; 
+            font-weight: bold; 
+            display: block; 
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Secret Letter */
+        #secret-content {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .love-letter {
+            font-style: italic;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--viola-purple);
+        }
+
+        /* Gallery */
+        .gallery-container {
+            display: none;
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-card {
+            background: white;
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: rotate(-1.5deg);
+            transition: 0.4s;
+        }
+
+        .photo-card:nth-child(even) { transform: rotate(1.5deg); }
+        .photo-card:hover { transform: rotate(0) scale(1.05); }
+
+        .photo-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .caption {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Elements */
+        .gift-box { font-size: 80px; cursor: pointer; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% {transform:translateY(0)} 50% {transform:translateY(-15px)} }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        button {
+            background: var(--viola-purple); color: white; border: none; padding: 15px 30px;
+            border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(155, 93, 229, 0.3); transition: 0.3s;
+        }
+        button:hover { background: var(--rose-pink); transform: translateY(-3px); }
+
+        .heart-particle { position: fixed; pointer-events: none; z-index: 99; animation: fly linear forwards; }
+        @keyframes fly { to { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <nav class="bg-black p-5 text-white shadow-xl">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-black tracking-tighter">APONGSKY <span class="text-yellow-400">STORE</span></h1>
-            <span class="text-xs border border-yellow-400 px-2 py-1 rounded text-yellow-400 uppercase tracking-widest">Official Store</span>
-        </div>
-    </nav>
+    <audio id="mySong" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="container mx-auto p-8">
-        <div id="productGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <section class="hero">
+        <div class="card">
+            <h1>Untuk Sayangku,</h1>
+            <span class="nadin-name">Nadin Uta Viola 💜</span>
+            
+            <div id="gift" class="gift-box" onclick="reveal()">🎁</div>
+            <p id="hint">Klik hadiahnya ya...</p>
+            
+            <div id="secret-content">
+                <div class="love-letter">
+                    "Sama seperti namamu, Nadin Uta Viola... kamu adalah melodi paling indah yang pernah aku dengar dan bunga yang paling cantik yang pernah aku temukan. <br><br>
+                    Terima kasih sudah memilihku untuk berjalan di sampingmu. Di hari Valentine ini, aku cuma mau bilang kalau aku beruntung banget punya kamu. Tetap jadi Nadin yang ceria ya? I love you more than words can say."
+                </div>
+                <button onclick="document.getElementById('gallery').scrollIntoView()">Buka Kenangan Kita ✨</button>
             </div>
-    </div>
-
-    <footer class="bg-white mt-20 border-t border-gray-200 p-10 text-center">
-        <p class="font-bold text-lg mb-2 text-black">APONGSKY STORE</p>
-        <p class="text-gray-500 text-sm italic mb-4">"Kualitas Terbaik Hanya Untuk Anda"</p>
-        <div class="text-gray-400 text-xs tracking-widest uppercase">
-            &copy; 2024 - 2026 <span class="text-black font-semibold text-sm">APONGSKY</span>. ALL RIGHTS RESERVED.
         </div>
-    </footer>
+    </section>
+
+    <section id="gallery" class="gallery-container">
+        <h2 style="text-align: center; color: var(--rose-pink); font-size: 2rem; margin-bottom: 40px;">Our Sweet Moments 🌸</h2>
+        <div class="gallery-grid">
+            
+            <div class="photo-card">
+                <img src="https://i.ibb.co.com/hR04HzSs/image.jpg" alt="Foto 1">
+                <p class="caption">"Setiap liat foto ini, aku selalu senyum-senyum sendiri..."</p>
+            </div>
+
+            <div class="photo-card">
+                <img src="https://i.ibb.co.com/q3jsGsWX/image.jpg" alt="Foto 2">
+                <p class="caption">"Kamu beneran definisi cantik yang nyata bagi aku."</p>
+            </div>
+
+            <div class="photo-card">
+                <img src="https://i.ibb.co.com/wNLktn2K/image.jpg" alt="Foto 3">
+                <p class="caption">"Makasih ya buat semua tawanya, Din."</p>
+            </div>
+
+            <div class="photo-card">
+                <img src="https://i.ibb.co.com/fdqgcDYV/image.jpg" alt="Foto 4">
+                <p class="caption">"Valentine tahun ini spesial banget karena ada kamu."</p>
+            </div>
+
+        </div>
+        <p style="text-align: center; margin-top: 100px; color: var(--viola-purple); font-weight: bold;">
+            Happy Valentine's Day, Nadin Uta Viola! ❤️
+        </p>
+    </section>
 
     <script>
-        const storeWA = "628123456789"; // GANTI DENGAN NOMOR WA KAMU (Awali 62)
+        function reveal() {
+            document.getElementById('gift').innerHTML = '💐';
+            document.getElementById('gift').style.animation = 'none';
+            document.getElementById('hint').style.display = 'none';
+            document.getElementById('secret-content').style.display = 'block';
+            document.getElementById('gallery').style.display = 'block';
+            
+            const song = document.getElementById('mySong');
+            song.play();
+            
+            for(let i=0; i<60; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
 
-        fetch('produk.json')
-            .then(res => res.json())
-            .then(products => {
-                const grid = document.getElementById('productGrid');
-                products.forEach(p => {
-                    const waLink = `https://wa.me/${storeWA}?text=Halo Apongsky, saya mau pesan ${p.nama}`;
-                    grid.innerHTML += `
-                        <div class="bg-white rounded-2xl overflow-hidden product-card shadow-sm">
-                            <img src="${p.gambar}" class="w-full h-56 object-cover">
-                            <div class="p-5">
-                                <h3 class="font-bold text-lg text-black uppercase">${p.nama}</h3>
-                                <p class="text-gray-400 text-xs mb-4">${p.desc}</p>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-black text-blue-600">${p.harga}</span>
-                                    <a href="${waLink}" target="_blank" class="bg-black text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-yellow-400 hover:text-black transition">BELI</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            });
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            const icons = ['💜', '❤️', '🌸', '✨', '💐'];
+            heart.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
     </script>
 </body>
 </html>
