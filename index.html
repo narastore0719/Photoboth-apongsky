@@ -5,178 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Special for Nadin Uta Viola</title>
     <style>
-        :root {
-            --viola-purple: #9b5de5;
-            --rose-pink: #f15bb5;
-            --soft-bg: #fff0f3;
-        }
-
-        body {
-            margin: 0;
-            background: var(--soft-bg);
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            background: linear-gradient(135deg, #fee1e8 0%, #eaf4ff 100%);
-            padding: 20px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            border: 1px solid white;
-            width: 100%;
-            max-width: 400px;
-            z-index: 10;
-        }
-
-        .nadin-name { color: var(--rose-pink); font-size: 2.2rem; font-weight: bold; display: block; margin-bottom: 10px; }
-
-        .love-letter {
-            display: none;
-            margin-top: 20px;
-            font-style: italic;
-            line-height: 1.6;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 15px;
-            border-radius: 15px;
-            animation: fadeIn 1.5s ease;
-        }
-
-        .gallery-container {
-            display: none;
-            padding: 50px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .photo-card {
-            background: white;
-            padding: 12px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transition: 0.4s;
-        }
-
-        .photo-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            display: block;
-        }
-
-        .caption {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #555;
-            text-align: center;
-        }
-
+        :root { --viola: #9b5de5; --pink: #f15bb5; --bg: #fff0f3; }
+        body { margin: 0; background: var(--bg); font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
+        .hero { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; background: linear-gradient(135deg, #fee1e8 0%, #eaf4ff 100%); }
+        .card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 85%; max-width: 400px; }
+        .nadin-name { color: var(--pink); font-size: 2.2rem; font-weight: bold; display: block; margin: 15px 0; }
         .gift-box { font-size: 80px; cursor: pointer; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% {transform:translateY(0)} 50% {transform:translateY(-15px)} }
+        #content { display: none; animation: fadeIn 1.5s; }
+        .letter { font-style: italic; line-height: 1.6; background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; color: #444; }
+        .gallery { display: none; padding: 50px 15px; max-width: 800px; margin: 0 auto; }
+        .photo-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .photo-card { background: white; padding: 10px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .photo-card img { width: 100%; border-radius: 10px; display: block; }
+        button { background: var(--viola); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .wa-btn { background: #25d366; margin-top: 30px; display: inline-block; text-decoration: none; color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; }
+        .heart { position: fixed; top: -10vh; animation: fall linear forwards; z-index: 99; }
+        @keyframes bounce { 0%, 100% {transform:translateY(0)} 50% {transform:translateY(-20px)} }
         @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-
-        button {
-            background: var(--viola-purple); color: white; border: none; padding: 15px 30px;
-            border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px;
-        }
-
-        .heart-particle { position: fixed; pointer-events: none; z-index: 99; animation: fly linear forwards; }
-        @keyframes fly { to { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+        @keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <audio id="mySong" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="musik" loop><source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg"></audio>
 
     <section class="hero">
         <div class="card">
-            <h1>Happy Valentine,</h1>
+            <h2 style="margin:0; color: #555;">Happy Valentine, Sayanggg...</h2>
             <span class="nadin-name">Nadin Uta Viola 💜</span>
-            <div id="gift" class="gift-box" onclick="reveal()">🎁</div>
-            <p id="hint">Klik hadiahnya ya, Sayang...</p>
-            
-            <div id="loveLetter" class="love-letter">
-                "Sama seperti namamu, Nadin Uta Viola... kamu adalah melodi paling indah dan bunga yang paling cantik di hidupku. Happy Valentine's Day! 💜"
-                <br>
-                <button onclick="document.getElementById('gallery').scrollIntoView()">Lihat Foto Kita ✨</button>
+            <div id="gift" onclick="buka()">🎁</div>
+            <p id="hint">Klik kadonya dong, Sayang...</p>
+            <div id="content">
+                <div class="letter">
+                    "Sama seperti namamu, kamu seindah bunga Viola dan melodi paling manis di hidupku. Makasih ya udah nemenin aku terus. I love you so much, Sayanggg! ❤️"
+                </div>
+                <button onclick="document.getElementById('gallery').scrollIntoView()">Lihat Kenangan Kita ✨</button>
             </div>
         </div>
     </section>
 
-    <section id="gallery" class="gallery-container">
-        <h2 style="text-align: center; color: var(--rose-pink); margin-bottom: 30px;">Our Memories 🌸</h2>
-        <div class="gallery-grid">
-            
-            <div class="photo-card">
-                <img src="https://i.ibb.co.com/hR04HzSs/image.jpg" alt="Foto 1">
-                <p class="caption">Momen indah bareng Nadin 💜</p>
-            </div>
-
-            <div class="photo-card">
-                <img src="https://i.ibb.co.com/q3jsGsWX/image.jpg" alt="Foto 2">
-                <p class="caption">Senyum kamu favorit aku 😍</p>
-            </div>
-
-            <div class="photo-card">
-                <img src="https://i.ibb.co.com/wNLktn2K/image.jpg" alt="Foto 3">
-                <p class="caption">Bahagia terus ya kita ✨</p>
-            </div>
-
-            <div class="photo-card">
-                <img src="https://i.ibb.co.com/fdqgcDYV/image.jpg" alt="Foto 4">
-                <p class="caption">I love you so much! ❤️</p>
-            </div>
-
+    <section id="gallery" class="gallery">
+        <h2 style="text-align: center; color: var(--pink); margin-bottom: 30px;">Our Memories 🌸</h2>
+        <div class="photo-grid">
+            <div class="photo-card"><img src="https://i.ibb.co.com/hR04HzSs/image.jpg"></div>
+            <div class="photo-card"><img src="https://i.ibb.co.com/q3jsGsWX/image.jpg"></div>
+            <div class="photo-card"><img src="https://i.ibb.co.com/wNLktn2K/image.jpg"></div>
+            <div class="photo-card"><img src="https://i.ibb.co.com/fdqgcDYV/image.jpg"></div>
         </div>
-        <p style="text-align: center; margin-top: 50px; color: #888;">Forever with Nadin Uta Viola</p>
+        <div style="text-align: center;">
+            <a href="https://wa.me/?text=I%20Love%20You%20Too%20Sayang!%20💜" class="wa-btn">Balas Pesan ke Aku 😍</a>
+            <p style="margin-top: 30px; color: #999;">Made with ❤️ for Nadin Uta Viola</p>
+        </div>
     </section>
 
     <script>
-        function reveal() {
+        function buka() {
             document.getElementById('gift').innerHTML = '💐';
             document.getElementById('gift').style.animation = 'none';
             document.getElementById('hint').style.display = 'none';
-            document.getElementById('loveLetter').style.display = 'block';
+            document.getElementById('content').style.display = 'block';
             document.getElementById('gallery').style.display = 'block';
-            
-            document.getElementById('mySong').play();
-            
-            for(let i=0; i<50; i++) {
-                setTimeout(createHeart, i * 100);
-            }
+            document.getElementById('musik').play().catch(e => console.log("Musik jalan setelah klik"));
+            for(let i=0; i<60; i++) { setTimeout(buatHati, i * 150); }
         }
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            heart.innerHTML = ['💜', '❤️', '🌸', '✨'][Math.floor(Math.random()*4)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '100vh';
-            heart.style.fontSize = '25px';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
+        function buatHati() {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.innerHTML = ['💜','❤️','🌸','✨'][Math.floor(Math.random()*4)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 20 + 20 + 'px';
+            h.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
         }
     </script>
 </body>
