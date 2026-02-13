@@ -3,74 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special for Nadin Uta Viola</title>
+    <title>Special for Nadin</title>
     <style>
-        :root { --viola: #9b5de5; --pink: #f15bb5; --bg: #fff0f3; }
-        body { margin: 0; background: var(--bg); font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
-        .hero { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; background: linear-gradient(135deg, #fee1e8 0%, #eaf4ff 100%); }
-        .card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 85%; max-width: 400px; }
-        .nadin-name { color: var(--pink); font-size: 2.2rem; font-weight: bold; display: block; margin: 15px 0; }
-        .gift-box { font-size: 80px; cursor: pointer; animation: bounce 2s infinite; }
-        #content { display: none; animation: fadeIn 1.5s; }
-        .letter { font-style: italic; line-height: 1.6; background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; color: #444; }
-        .gallery { display: none; padding: 50px 15px; max-width: 800px; margin: 0 auto; }
-        .photo-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .photo-card { background: white; padding: 10px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .photo-card img { width: 100%; border-radius: 10px; display: block; }
-        button { background: var(--viola); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .wa-btn { background: #25d366; margin-top: 30px; display: inline-block; text-decoration: none; color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; }
-        .heart { position: fixed; top: -10vh; animation: fall linear forwards; z-index: 99; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #fff0f3; color: #444; overflow-x: hidden; }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(#ffccd5, #fff0f3); padding: 20px; text-align: center; }
+        .card { background: rgba(255, 255, 255, 0.9); padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 380px; }
+        h1 { color: #ff4d6d; font-size: 1.5rem; margin-bottom: 5px; }
+        .nama { color: #9b5de5; font-size: 2rem; font-weight: bold; display: block; margin-bottom: 20px; }
+        .gift { font-size: 80px; cursor: pointer; animation: bounce 2s infinite; display: inline-block; }
         @keyframes bounce { 0%, 100% {transform:translateY(0)} 50% {transform:translateY(-20px)} }
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        @keyframes fall { to { transform: translateY(110vh); opacity: 0; } }
+        #main-content, #gallery { display: none; }
+        .photo-box { background: #fff; padding: 10px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .photo-box img { width: 100%; height: auto; border-radius: 10px; display: block; border: none; }
+        .btn { background: #9b5de5; color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn-wa { background: #25d366; color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: bold; margin-top: 30px; }
+        .hati { position: fixed; top: -10vh; animation: fall linear forwards; z-index: 99; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <audio id="musik" loop><source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg"></audio>
+    <audio id="lagu" loop><source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg"></audio>
 
-    <section class="hero">
+    <div class="hero">
         <div class="card">
-            <h2 style="margin:0; color: #555;">Happy Valentine, Sayanggg...</h2>
-            <span class="nadin-name">Nadin Uta Viola 💜</span>
-            <div id="gift" onclick="buka()">🎁</div>
-            <p id="hint">Klik kadonya dong, Sayang...</p>
-            <div id="content">
-                <div class="letter">
-                    "Sama seperti namamu, kamu seindah bunga Viola dan melodi paling manis di hidupku. Makasih ya udah nemenin aku terus. I love you so much, Sayanggg! ❤️"
-                </div>
-                <button onclick="document.getElementById('gallery').scrollIntoView()">Lihat Kenangan Kita ✨</button>
+            <h1>Happy Valentine,</h1>
+            <span class="nama">Sayanggg Nadin 💜</span>
+            <div id="gift-icon" class="gift" onclick="buka()">🎁</div>
+            <p id="hint">Klik kadonya dong, Sayanggg...</p>
+            <div id="main-content">
+                <p><i>"Nadin Uta Viola, terima kasih sudah menjadi bagian terindah dalam hidupku. I love you more than words can say! ❤️"</i></p>
+                <button class="btn" onclick="scrollKeFoto()">Lihat Memori Kita ✨</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="gallery" class="gallery">
-        <h2 style="text-align: center; color: var(--pink); margin-bottom: 30px;">Our Memories 🌸</h2>
-        <div class="photo-grid">
-            <div class="photo-card"><img src="https://i.ibb.co.com/hR04HzSs/image.jpg"></div>
-            <div class="photo-card"><img src="https://i.ibb.co.com/q3jsGsWX/image.jpg"></div>
-            <div class="photo-card"><img src="https://i.ibb.co.com/wNLktn2K/image.jpg"></div>
-            <div class="photo-card"><img src="https://i.ibb.co.com/fdqgcDYV/image.jpg"></div>
-        </div>
-        <div style="text-align: center;">
-            <a href="https://wa.me/?text=I%20Love%20You%20Too%20Sayang!%20💜" class="wa-btn">Balas Pesan ke Aku 😍</a>
-            <p style="margin-top: 30px; color: #999;">Made with ❤️ for Nadin Uta Viola</p>
-        </div>
-    </section>
+    <div id="gallery" style="padding: 50px 20px; text-align: center; background: white;">
+        <h2 style="color: #ff4d6d; margin-bottom: 30px;">Our Sweet Moments 🌸</h2>
+        
+        <div class="photo-box"><img src="https://i.ibb.co.com/hR04HzSs/image.jpg"></div>
+        <div class="photo-box"><img src="https://i.ibb.co.com/q3jsGsWX/image.jpg"></div>
+        <div class="photo-box"><img src="https://i.ibb.co.com/wNLktn2K/image.jpg"></div>
+        <div class="photo-box"><img src="https://i.ibb.co.com/fdqgcDYV/image.jpg"></div>
+
+        <a href="https://wa.me/?text=Sayanggg%20aku%20suka%20banget%20surprisenya!%20💜" class="btn-wa">Balas Sayanggg 😍</a>
+        <p style="margin-top: 40px; color: #aaa; font-size: 0.8rem;">Forever with Nadin Uta Viola</p>
+    </div>
 
     <script>
         function buka() {
-            document.getElementById('gift').innerHTML = '💐';
-            document.getElementById('gift').style.animation = 'none';
+            document.getElementById('gift-icon').innerHTML = '💐';
+            document.getElementById('gift-icon').style.animation = 'none';
             document.getElementById('hint').style.display = 'none';
-            document.getElementById('content').style.display = 'block';
+            document.getElementById('main-content').style.display = 'block';
             document.getElementById('gallery').style.display = 'block';
-            document.getElementById('musik').play().catch(e => console.log("Musik jalan setelah klik"));
-            for(let i=0; i<60; i++) { setTimeout(buatHati, i * 150); }
+            document.getElementById('lagu').play().catch(() => {});
+            for(let i=0; i<60; i++) { setTimeout(hujanHati, i * 150); }
         }
-        function buatHati() {
+        function scrollKeFoto() {
+            document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});
+        }
+        function hujanHati() {
             const h = document.createElement('div');
-            h.className = 'heart';
+            h.className = 'hati';
             h.innerHTML = ['💜','❤️','🌸','✨'][Math.floor(Math.random()*4)];
             h.style.left = Math.random() * 100 + 'vw';
             h.style.fontSize = Math.random() * 20 + 20 + 'px';
